@@ -1,0 +1,7 @@
+fastapi
+pydantic
+sqlalchemy
+transformers
+torch
+numpy
+uvicorn
