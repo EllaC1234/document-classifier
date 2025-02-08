@@ -1,11 +1,23 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { FileUploadModule } from 'ng2-file-upload';
+import { DocumentUploadComponent } from './document-upload/document-upload.component';
+import { DocumentListComponent } from './document-list/document-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FileUploadModule,
+    DocumentUploadComponent,
+    DocumentListComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  standalone: true
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Document Classifier';
 }

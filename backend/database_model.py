@@ -15,6 +15,7 @@ class Documents(Base):
     __tablename__ = "documents"
     id = Column(Integer, primary_key=True, index=True)
     filename = Column(String)
+    file_path = Column(String)
     content = Column(String)
     category = Column(String)
     confidence = Column(String)

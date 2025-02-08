@@ -18,6 +18,7 @@ backend/*.py[cod]
 backend/*$py.class
 backend/.env
 backend/venv/
+backend/uploads/
 
 # IDEs and editors
 .idea/

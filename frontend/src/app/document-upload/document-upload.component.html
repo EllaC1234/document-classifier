@@ -1,1 +1,29 @@
-<p>document-upload works!</p>
+<div class="drop-area border border-dashed rounded p-4 text-center cursor-pointer"
+      (fileOver)="fileOverBase($event)"
+      [class.drop-zone-over]="hasBaseDropZoneOver">
+  <p>Drag & drop a file here</p>
+  <input type="file" ng2FileSelect [uploader]="uploader" multiple class="d-none" id="fileInput">
+  <label for="fileInput" class="btn btn-primary">Select File</label>
+</div>
+
+<ul class="list-group mt-3">
+  @for (item of uploader.queue; track item.file.name) {
+    <li class="list-group-item">
+      {{ item?.file?.name }} - {{ item?.progress }}%
+      <button type="button" class="btn btn-sm btn-danger ml-2" (click)="item.remove()">Remove</button>
+    </li>
+  }
+</ul>
+
+<button type="button"
+        class="btn btn-success mt-3"
+        (click)="uploadAll()"
+        [disabled]="!uploader.getNotUploadedItems().length">
+  Upload all
+</button>
+
+@if (uploadMessage) {
+  <div class="mt-3">
+    <p>{{ uploadMessage }}</p>
+  </div>
+}
