@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 import logging
 from transformers import pipeline
-from .config import settings
+from config import settings
 
 logger = logging.getLogger(__name__)
 

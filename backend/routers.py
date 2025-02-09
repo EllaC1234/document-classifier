@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 from typing import List
 import os
 import logging
-from .config import settings
-from .ml_service import MLService
-from .document_handler import DocumentHandler
-from .database_model import get_db
+from config import settings
+from ml_service import MLService
+from document_handler import DocumentHandler
+from database_model import get_db
 
 router = APIRouter()
 logger = logging.getLogger(__name__)

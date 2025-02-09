@@ -20,7 +20,9 @@ backend/.env
 backend/venv/
 backend/uploads/
 backend/logs/
+**/documents.db
 backend/documents.db
+*.db
 
 # IDEs and editors
 .idea/

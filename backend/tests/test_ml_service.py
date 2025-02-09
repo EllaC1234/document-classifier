@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock, patch
-from ..ml_service import MLService
+from ml_service import MLService
 
 class TestMLService(unittest.TestCase):
     def setUp(self):
@@ -9,7 +9,7 @@ class TestMLService(unittest.TestCase):
         self.mock_labels = ["Category1", "Category2"]
         self.ml_service.candidate_labels = self.mock_labels
 
-    @patch('backend.ml_service.pipeline')
+    @patch('ml_service.pipeline')
     def test_init(self, mock_pipeline):
         """Test MLService initialization"""
         MLService()

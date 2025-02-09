@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from fastapi.testclient import TestClient
 import io
-from ..main import app
+from main import app
 
 class TestRouters(unittest.TestCase):
     def setUp(self):

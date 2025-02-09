@@ -36,11 +36,10 @@ export class DocumentListComponent implements OnInit {
 
   fetchData() {
     this.loading = true;
-    const apiUrl = 'http://127.0.0.1:8000/api/get_documents';
 
     this.http.get<PreviousDoc[]>(this.API_URL).subscribe({
       next: (data) => {
-        this.data = data;
+        this.data = data.reverse();
         this.loading = false;
       },
       error: (error) => {

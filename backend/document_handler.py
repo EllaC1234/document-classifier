@@ -1,6 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
-from .database_model import Documents
+from database_model import Documents
 from datetime import datetime
 
 class DocumentHandler:
