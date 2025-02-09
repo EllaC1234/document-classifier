@@ -2,8 +2,8 @@ import logging
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from config import settings
-from routers import router
+from .config import settings
+from .routers import router
 
 # Configure logging
 def setup_logging():
