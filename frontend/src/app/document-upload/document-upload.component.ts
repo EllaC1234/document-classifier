@@ -25,7 +25,7 @@ interface ClassificationResponse {
 })
 
 export class DocumentUploadComponent {
-  URL = 'http://127.0.0.1:8000/upload';
+  readonly API_URL = 'http://127.0.0.1:8000/api/upload';
   uploader: FileUploader;
   hasBaseDropZoneOver: boolean = false;
   uploadMessage: string = '';
@@ -33,7 +33,7 @@ export class DocumentUploadComponent {
 
   constructor() {
     this.uploader = new FileUploader({
-      url: this.URL,
+      url: this.API_URL,
       itemAlias: 'file',
       removeAfterUpload: false,
       autoUpload: false
@@ -50,12 +50,10 @@ export class DocumentUploadComponent {
     this.uploader.onCompleteItem = (item: any, response: any, status: any) => {
       try {
         const result = JSON.parse(response);
-        console.log('Raw API response: ', result);
         this.classificationResults = {
           fileName: item.file.name,
           predictions: result.predictions
         };
-        console.log('Processed results: ', this.classificationResults);
         this.uploadMessage = '';
         item.remove();
       } catch (error) {

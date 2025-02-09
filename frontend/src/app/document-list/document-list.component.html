@@ -4,10 +4,11 @@
     <table class="table">
       <thead class="table-light">
         <tr>
-          <th scope="col" class="col-md-4">Filename</th>
-          <th scope="col" class="col-md-3">Predicted Category</th>
-          <th scope="col" class="col-md-3">Confidence</th>
-          <th scope="col" class="col-md-2">Upload Time</th>
+          <th *ngFor="let header of tableHeaders"
+              scope="col"
+              [class]="header.class">
+            {{header.label}}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -15,7 +16,7 @@
             <div class="spinner-border text-primary" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-        } @else if (data.length > 0) {
+        } @else if (data.length) {
           @for (item of data; track item.filename) {
             <tr>
               <td class="col-md-4">{{ item.filename }}</td>

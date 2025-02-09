@@ -3,16 +3,33 @@
   grid-template-columns: 32.5% 67.5%;
 }
 
+.drop-area, .results-section {
+  border-radius: 10px;
+  background-color: #f8f8f9;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.drop-area {
+  grid-column: 1;
+  margin: 1rem 1rem 1rem 0;
+}
+
+.results-section {
+  grid-column: 2;
+  margin: 1rem 0;
+}
+
+.table-responsive {
+  height: 300px;
+}
+
 .file-upload-text {
   color: #565E6CFF;
 }
 
 .upload-filename {
   font-size: 0.9rem;
-}
-
-.table-responsive {
-  height: 300px;
 }
 
 .classify-btn {
@@ -24,27 +41,12 @@
   margin: 1rem 0;
 }
 
-.drop-area {
-  grid-column: 1;
-  margin: 1rem 0;
-  border-radius: 10px;
-  background-color: #fcfcfd;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
-  margin: 1rem 1rem 1rem 0;
-}
-
-.results-section {
-  grid-column: 2;
-  margin: 1rem 0;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: #fcfcfd;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-}
-
 i {
   margin-right: 0.25rem;
+}
+
+li {
+  list-style-type: none;
 }
 
 .selected-file {
@@ -56,10 +58,6 @@ i {
 
 .results-stats {
   display: flex;
-}
-
-li {
-  list-style-type: none;
 }
 
 .label {

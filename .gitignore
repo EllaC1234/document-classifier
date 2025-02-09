@@ -19,6 +19,8 @@ backend/*$py.class
 backend/.env
 backend/venv/
 backend/uploads/
+backend/logs/
+backend/documents.db
 
 # IDEs and editors
 .idea/

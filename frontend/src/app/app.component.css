@@ -23,8 +23,8 @@
 }
 
 .document-list {
-  background: #fcfcfd;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  background: #f8f8f9;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 1rem;
 }

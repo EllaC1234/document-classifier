@@ -11,6 +11,7 @@ type PreviousDoc = {
 
 @Component({
   selector: 'document-list',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './document-list.component.html',
   styleUrl: './document-list.component.css'
@@ -18,6 +19,14 @@ type PreviousDoc = {
 export class DocumentListComponent implements OnInit {
   data: PreviousDoc[] = [];
   loading: boolean = true;
+  readonly API_URL = 'http://127.0.0.1:8000/api/get_documents';
+
+  tableHeaders = [
+    { label: 'Filename', class: 'col-md-4' },
+    { label: 'Predicted Category', class: 'col-md-3' },
+    { label: 'Confidence', class: 'col-md-3' },
+    { label: 'Upload Time', class: 'col-md-2' }
+  ];
 
   constructor(private http: HttpClient) { }
 
@@ -27,18 +36,16 @@ export class DocumentListComponent implements OnInit {
 
   fetchData() {
     this.loading = true;
-    const apiUrl = 'http://127.0.0.1:8000/get_documents';
+    const apiUrl = 'http://127.0.0.1:8000/api/get_documents';
 
-    this.http.get<PreviousDoc[]>(apiUrl).subscribe({
+    this.http.get<PreviousDoc[]>(this.API_URL).subscribe({
       next: (data) => {
         this.data = data;
         this.loading = false;
       },
       error: (error) => {
-        // TODO: Handle error
         console.error('Error fetching data:', error);
-        this.loading = false; // Even on error, stop loading indicator
-        // Handle the error appropriately, e.g., display an error message
+        this.loading = false;
       }
     });
   }

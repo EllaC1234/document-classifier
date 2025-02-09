@@ -22,9 +22,7 @@
 
   <div class="file-upload-text upload-filename">
     @if (uploadMessage) {
-      <div class="mt-3">
-        <p>{{ uploadMessage }}</p>
-      </div>
+      <p class="mt-3">{{ uploadMessage }}</p>
     }
     @if (uploader.queue.length > 0) {
       <p class="selected-file">
@@ -41,40 +39,42 @@
     </button>
   </div>
 
-  <div class="results-section" *ngIf="classificationResults">
-    <div class="results">
-      <h2>Results</h2>
-      <div class="results-stats">
-        <div class="key-results">
-          <div class="result-item">
-            <span class="label">Filename</span>
-            <span class="value">{{ classificationResults.fileName }}</span>
+  @if (classificationResults) {
+    <div class="results-section">
+      <div class="results">
+        <h2>Results</h2>
+        <div class="results-stats">
+          <div class="key-results">
+            <div class="result-item">
+              <span class="label">Filename</span>
+              <span class="value">{{ classificationResults.fileName }}</span>
+            </div>
+            <div class="result-item">
+              <span class="label">Top Category</span>
+              <span class="value">{{ classificationResults.predictions[0].category }}</span>
+            </div>
+            <div class="result-item">
+              <span class="label">Confidence Score</span>
+              <span class="value" [ngClass]="{
+                'confidence-high': classificationResults.predictions[0].confidence >= 0.7,
+                'confidence-medium': classificationResults.predictions[0].confidence >= 0.4 && classificationResults.predictions[0].confidence < 0.7,
+                'confidence-low': classificationResults.predictions[0].confidence < 0.4
+              }">{{ classificationResults.predictions[0].confidence | percent:'1.0-2' }}</span>
+            </div>
           </div>
-          <div class="result-item">
-            <span class="label">Top Category</span>
-            <span class="value">{{ classificationResults.predictions[0].category }}</span>
-          </div>
-          <div class="result-item">
-            <span class="label">Confidence Score</span>
-            <span class="value" [ngClass]="{
-              'confidence-high': classificationResults.predictions[0].confidence >= 0.7,
-              'confidence-medium': classificationResults.predictions[0].confidence >= 0.4 && classificationResults.predictions[0].confidence < 0.7,
-              'confidence-low': classificationResults.predictions[0].confidence < 0.4
-            }">{{ classificationResults.predictions[0].confidence | percent:'1.0-2' }}</span>
-          </div>
-        </div>
-        <div class="other-results">
-          <p class="label">Category Scores</p>
-          <div class="predictions-grid">
-            <li *ngFor="let prediction of classificationResults.predictions">
-              {{ prediction.category }}
-              <span>
-                {{ prediction.confidence | percent:'1.0-2' }}
-              </span>
-            </li>
+          <div class="other-results">
+            <p class="label">Category Scores</p>
+            <div class="predictions-grid">
+              <li *ngFor="let prediction of classificationResults.predictions">
+                {{ prediction.category }}
+                <span>
+                  {{ prediction.confidence | percent:'1.0-2' }}
+                </span>
+              </li>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 </div>
