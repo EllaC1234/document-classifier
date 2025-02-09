@@ -14,12 +14,14 @@ frontend/typings
 
 # Backend
 backend/__pycache__/
+backend/.pytest_cache/
 backend/*.py[cod]
 backend/*$py.class
 backend/.env
 backend/venv/
 backend/uploads/
 backend/logs/
+backend/tests/__pycache__/
 **/documents.db
 backend/documents.db
 *.db

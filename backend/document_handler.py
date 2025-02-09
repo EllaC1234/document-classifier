@@ -4,6 +4,11 @@ from database_model import Documents
 from datetime import datetime
 
 class DocumentHandler:
+    """
+    Handles database operations for document storage and retrieval.
+    Manages document metadata and classification results in the database.
+    """
+    
     def __init__(self, db: Session):
         self.db = db
 
