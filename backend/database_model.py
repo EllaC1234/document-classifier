@@ -19,7 +19,7 @@ class Documents(Base):
     content = Column(String)
     category = Column(String)
     confidence = Column(String)
-    upload_time = Column(DateTime)
+    upload_time = Column(String)
 
 Base.metadata.create_all(bind=engine) # Create the table
 

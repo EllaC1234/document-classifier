@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+body, p {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+}
+
+h1, h2 {
+  font-family: Archivo, sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.25rem 0.5rem;
+  font-size: 2rem;
+}
+
+h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+a {
+  color: #636AE8FF;
+}
+
+.confidence-high, .table > tbody > tr > td.confidence-high {
+  color: #22c55e;  /* green */
+}
+
+.confidence-medium, .table > tbody > tr > td.confidence-medium {
+  color: #f59e0b;  /* yellow/amber */
+}
+
+.confidence-low, .table > tbody > tr > td.confidence-low {
+  color: #ef4444;  /* red */
+}

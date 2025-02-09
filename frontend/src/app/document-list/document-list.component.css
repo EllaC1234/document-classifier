@@ -1,0 +1,30 @@
+.table-responsive {
+  border: 1px solid #c8d1da;
+  border-radius: 10px;
+  max-height: 90%;
+}
+
+.table {
+  thead tr th {
+    background-color: #fafafb;
+    color: #565E6CFF;
+    font-weight: 600;
+    font-size: 1rem;
+    position: sticky;
+    top: 0;
+  }
+
+  tbody tr {
+    border: white;
+    line-height: 22px;
+
+    td {
+      background-color: #fcfcfd;
+    }
+  }
+}
+
+
+.spinner-border {
+  margin: 0.5rem;
+}

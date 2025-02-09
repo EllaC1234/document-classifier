@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 type PreviousDoc = {
   filename: string;
   category: string;
   confidence: number;
-  upload_time: Date;
+  upload_time: string;
 }
 
 @Component({
   selector: 'document-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './document-list.component.html',
   styleUrl: './document-list.component.css'
 })

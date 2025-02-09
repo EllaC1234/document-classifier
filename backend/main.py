@@ -50,16 +50,15 @@ async def upload_document(file: UploadFile = File(...), db: Session = Depends(ge
             file_path = file_path, 
             content=text_content, 
             category=classification_result['category'], 
-            confidence=str(classification_result['scores'][classification_result['category']]), 
-            upload_time=datetime.datetime.now()
+            confidence=str(classification_result['predictions'][0]['confidence']), 
+            upload_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         )
         db.add(doc)
         db.commit()
         db.refresh(doc)
         return {
-            "filename": doc.filename, 
-            "category": classification_result['category'], 
-            "scores": classification_result['scores']
+            "filename": doc.filename,
+            "predictions": classification_result['predictions']
         }
 
     except Exception as e:
@@ -69,7 +68,7 @@ async def upload_document(file: UploadFile = File(...), db: Session = Depends(ge
 @app.get("/get_documents")
 def get_documents(db: Session = Depends(get_db)):
     documents = db.query(Documents).all()
-    return [{"id": doc.id, "filename": doc.filename, "category": doc.category, "confidence": doc.confidence, "upload_time": doc.upload_time.isoformat()} for doc in documents]
+    return [{"id": doc.id, "filename": doc.filename, "category": doc.category, "confidence": doc.confidence, "upload_time": doc.upload_time} for doc in documents]
 
 import numpy as np
 from transformers import pipeline
@@ -84,11 +83,15 @@ def classify_document(text, chunk_size=750):
         result = classifier(text, candidate_labels, multi_label=False)
         return {
             'category': result['labels'][0],
-            'scores': dict(zip(result['labels'], result['scores']))
+            'predictions': [
+                {
+                    "category": label,
+                    "confidence": score
+                } for label, score in zip(result['labels'], result['scores'])
+            ]
         }
 
-    overlap = 150  # Number of overlapping characters
-    chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size - overlap)]
+    chunks = [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
     chunk_results = []
 
     for i, chunk in enumerate(chunks):
@@ -96,39 +99,46 @@ def classify_document(text, chunk_size=750):
         try:
             result = classifier(chunk, candidate_labels, multi_label=False)
             chunk_results.append({
-                'category': result['labels'][0],
-                'scores': dict(zip(result['labels'], result['scores'])),
-                'length': len(chunk)
+                'labels': result['labels'],
+                'scores': result['scores']
             })
         except Exception as e:
             print(f"Error classifying chunk {i+1}: {e}")
             continue
 
     if not chunk_results:
-        return {'category': 'Other', 'scores': {label: 0.0 for label in candidate_labels}}
+        return {
+            'category': 'Other',
+            'predictions': [{"category": label, "confidence": 0.0} for label in candidate_labels]
+        }
 
-    # Weighted voting for category selection
-    category_counts = {}
+    # Average the scores across all chunks
+    averaged_scores = {label: 0.0 for label in candidate_labels}
     for result in chunk_results:
-        category = result['category']
-        weight = result['length']
-        category_counts[category] = category_counts.get(category, 0) + weight
+        for label, score in zip(result['labels'], result['scores']):
+            averaged_scores[label] += score
 
-    predicted_category = max(category_counts, key=category_counts.get)
+    # Calculate the mean
+    num_chunks = len(chunk_results)
+    for label in averaged_scores:
+        averaged_scores[label] /= num_chunks
 
-    # Correctly calculate weighted average scores for the predicted category ONLY
-    weighted_scores = {label: 0.0 for label in candidate_labels}
-    total_weighted_length_for_category = sum(
-        result['length'] for result in chunk_results if result['category'] == predicted_category
+    # Create and sort predictions
+    predictions = [
+        {
+            "category": label,
+            "confidence": score
+        }
+        for label, score in averaged_scores.items()
+    ]
+    
+    sorted_predictions = sorted(
+        predictions,
+        key=lambda x: x["confidence"],
+        reverse=True
     )
 
-    if total_weighted_length_for_category == 0: # Handle edge case where no chunks match the selected category
-        return {'category': 'Other', 'scores': {label: 0.0 for label in candidate_labels}}
-
-    for result in chunk_results:
-        if result['category'] == predicted_category:
-            weight = result['length'] / total_weighted_length_for_category
-            for label, score in result['scores'].items():
-                weighted_scores[label] += score * weight
-
-    return {'category': predicted_category, 'scores': weighted_scores}
+    return {
+        'category': sorted_predictions[0]['category'],
+        'predictions': sorted_predictions
+    }

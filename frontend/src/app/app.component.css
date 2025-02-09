@@ -1,28 +1,30 @@
-body {
-  margin: 0;
-}
-
 .app-container {
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 10% 30% 60%;
+  grid-template-rows: 10% 35% 55%;
   height: 100vh;
 }
 
 .document-upload, .document-list {
-  padding: 20px;
-  margin: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #f0f0f0;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  margin: 1rem;
+}
+
+.header {
+  grid-row: 1;
+  height: max-content;
+  border-bottom: 1px solid #ebedf0;
 }
 
 .document-upload {
-  grid-column: 1;
   grid-row: 2;
 }
 
 .document-list {
-  grid-column: 1 / 3;
   grid-row: 3;
+}
+
+.document-list {
+  background: #fcfcfd;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
 }

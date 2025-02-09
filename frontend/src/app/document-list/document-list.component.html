@@ -1,38 +1,40 @@
-@if (loading) {
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-}
+<h2>Previous Uploads</h2>
 
-@if (!loading && data.length > 0) {
   <div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered">
-      <thead class="table-dark">
+    <table class="table">
+      <thead class="table-light">
         <tr>
-          <th scope="col">Filename</th>
-          <th scope="col">Predicted Category</th>
-          <th scope="col">Confidence</th>
-          <th scope="col">Upload Time</th>
+          <th scope="col" class="col-md-4">Filename</th>
+          <th scope="col" class="col-md-3">Predicted Category</th>
+          <th scope="col" class="col-md-3">Confidence</th>
+          <th scope="col" class="col-md-2">Upload Time</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of data; track item.filename) {
+        @if (loading) {
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+        } @else if (data.length > 0) {
+          @for (item of data; track item.filename) {
+            <tr>
+              <td class="col-md-4">{{ item.filename }}</td>
+              <td class="col-md-3">{{ item.category }}</td>
+              <td class="col-md-3" [ngClass]="{
+                'confidence-high': item.confidence >= 0.7,
+                'confidence-medium': item.confidence >= 0.4 && item.confidence < 0.7,
+                'confidence-low': item.confidence < 0.4
+              }">{{ item.confidence | percent:'1.0-2' }}</td>
+              <td class="col-md-2">{{ item.upload_time }}</td>
+            </tr>
+          }
+        } @else {
           <tr>
-            <td>{{ item.filename }}</td>
-            <td>{{ item.category }}</td>
-            <td>{{ item.confidence }}</td>
-            <td>{{ item.upload_time }}</td>
+            <td>
+              No classification results
+            </td>
           </tr>
         }
       </tbody>
     </table>
   </div>
-}
-
-@if (!loading && data.length === 0) {
-  <div class="alert alert-info text-center" role="alert">
-    No documents have been uploaded yet.
-  </div>
-}

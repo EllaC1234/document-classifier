@@ -1,0 +1,9 @@
+.icon {
+  display: flex;
+  margin: 1rem;
+}
+
+.header-img {
+  height: 6vh;
+  align-self: center;
+}
