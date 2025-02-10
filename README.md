@@ -61,6 +61,14 @@ This repository contains a document classification application built with an Ang
     ```bash
     uvicorn main:app --reload
     ```
+    
+### Running Backend Unit Tests
+
+1. In the root directory, run:
+
+   ```bash
+    python -m unittest backend/tests/<test file> -v
+   ```
 
 ## API Documentation
 
