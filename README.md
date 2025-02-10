@@ -85,7 +85,7 @@ If you are running the application locally, you can access the interactive API d
 
 ## ML Considerations
 
-After testing various models, I chose to use the facebook/bart-large-mnli model. I compared to the valhalla/distilbart-mnli-12-3 model, which I first considered due to being less resource intensive on a local environment, but realised it was giving very poor confidence scores. I then experimented with newer models including roberta-large and allenai/led-base-16384, but these did not improve the score and were considerably slower. In a production environment, I would recommend a cloud-based, newer model trained specifically for classification to provide better results.
+After testing various models, I chose to use the facebook/bart-large-mnli model. I compared to the valhalla/distilbart-mnli-12-3 model, which I first considered due to being less resource intensive on a local environment, but realised it was giving very poor confidence scores. I then experimented with newer models including roberta-large and allenai/led-base-16384, but these did not improve the score and were considerably slower. In a production environment, I would recommend a cloud-based, newer model trained specifically for classification to provide better results, such as by using the Custom Classifier service on GCP.
 
 Chunking was implemented to manage large files.
 
